@@ -1,21 +1,31 @@
+/**
+ * Module dependencies.
+ */
+var fs = require('fs')
+var axios = require('axios');
+var util = require('util');
 var express = require('express');
-var router = express.Router();
-
-router.get('/',function(req,res) {
-    res.send("Boujour le monde!!! Home page");
-});
-
-router.get('/about', function(req,res) {
-    res.send('About me! My name is Malou Alleno');
-});
-
-module.exports = router;
-
 var app = express();
+var bodyParser = require('body-parser');
+var port = 9000;
 
-app.route('/').get(function(req, res) {
-    res.send("Bonjour Malou !");
-    res.sendFile("testimport.html");
+/** 
+ * Config General
+ */
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
 });
 
-app.listen(9000)
+// Test Route
+app.get('/', function(req, res) {
+    res.send('Hello World');
+});
+
+//Route to handle user registration
+app.listen(port);
+
