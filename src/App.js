@@ -6,12 +6,13 @@ import {
     Switch
 } from 'react-router-dom';
 
-
 class App extends Component {
     render() {
         return (
 		<div>
-                    	<h1>Allez Ouste!!</h1>
+			<NavBar/>
+                    	<Home/>
+
                 </div>
         );
     };
