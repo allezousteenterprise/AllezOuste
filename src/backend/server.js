@@ -23,6 +23,8 @@ app.use(function(req, res, next) {
 
 // Test Route
 app.get('/', function(req, res) {
+    console.log("Lancement du serveur");
+    console.log("Lancement du serveur");
     res.send('Hello World');
 });
 
