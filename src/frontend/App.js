@@ -6,16 +6,17 @@ import {
     Switch
 } from 'react-router-dom';
 
+import Navbar from './components/Navbar';
+
 class App extends Component {
     render() {
         return (
-            <div className="App">
-                <div className="App-header">
-                    <h1>Allez Ouste !!</h1>
+		<div>
+			<Navbar/ >
+                    	<h1>Allez Ouste!!</h1>
                 </div>
-            </div>
         );
-    }
+    };
 }
 
 export default App;
