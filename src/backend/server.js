@@ -24,8 +24,11 @@ app.use(function(req, res, next) {
 // Test Route
 app.get('/', function(req, res) {
     console.log("Lancement du serveur");
-    console.log("Lancement du serveur");
     res.send('Hello World');
+});
+
+app.get('/voyages',function(req, res) {
+	res.send("Donnees SQL Voyages");
 });
 
 //Route to handle user registration

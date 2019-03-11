@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+
 import {
-    BrowserRouter,
+    BrowserRouter as Router,
     Link,
     Route,
     Switch
@@ -11,9 +12,11 @@ import Home from './components/Home';
 class App extends Component {
     render() {
         return (
+		<Router>
 		<div>
-                    	<Home/>
-                </div>
+			<Route exact path="/" component={ Home } />
+		</div>
+		</Router>
         );
     };
 }
