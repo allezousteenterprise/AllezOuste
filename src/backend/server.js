@@ -1,9 +1,6 @@
 /**
  * Module dependencies.
  */
-var fs = require('fs')
-var axios = require('axios');
-var util = require('util');
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
@@ -33,9 +30,9 @@ router.get('/', function(req, res) {
 
 
 //Route to handle user registration
-router.post('/register',login.register);
+//router.post('/register',login.register);
 router.post('/login',login.login);
-router.get('/voyage',login.home);
+//router.get('/voyage',login.home);
 app.use('/api', router);
 app.listen(port);
 

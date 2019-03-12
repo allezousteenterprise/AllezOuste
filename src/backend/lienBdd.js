@@ -1,9 +1,9 @@
 var mysql      = require('mysql');
 var connection = mysql.createConnection({
 	host     : 'obiwan2.univ-brest.fr',
-  	user     : 'le_papre',
+  	user     : 'zle_papre',
   	password : '2zc7yegl',
-  	database : 'zfm1-le_papre'
+  	database : 'zfm1-zle_papre'
 });
 connection.connect(function(err){
 	if(!err) {
