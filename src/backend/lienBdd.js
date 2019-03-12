@@ -16,10 +16,10 @@ connection.connect(function(err){
 exports.register = function(req,res){
   	console.log("req",req.body);
   	var users={
-    		"cli_pseudo":req.body.user.login,
+    		"cli_pseudo":req.body.user.identifiant,
     		"cli_mdp":req.body.user.password
   	}
-	var loginTest = req.body.user.email;
+	var loginTest = req.body.user.identifiant;
   	connection.query('INSERT INTO t_client_cli SET ?',users, function (error, results, fields) {
 		//select of databaselines with same identify 
 		connection.query('SELECT * FROM t_client_cli WHERE cli_pseudo = ?',[loginTest], function (error, results, fields) {
@@ -34,7 +34,7 @@ exports.register = function(req,res){
 			}
 			//case of insert line into table
 			else{
-				if(req.body.user.password !== req.body.user.password_confirm){
+				if(req.body.user.password !== req.body.user.confirmationpassword){
 					console.log("Le mot de passe et sa confirmation doivent être pareil !");
 					res.send({
 		      				"code":201,
@@ -61,9 +61,9 @@ exports.register = function(req,res){
 }
 /*action de connexion*/
 exports.login = function(req,res){
-  	var email= req.body.user.email;
+  	var identifiant = req.body.user.identifiant;
   	var password = req.body.user.password;
-  	connection.query('SELECT * FROM t_client_cli WHERE cli_pseudo = ?',[email], function (error, results, fields) {
+  	connection.query('SELECT * FROM t_client_cli WHERE cli_pseudo = ?',[identifiant], function (error, results, fields) {
   		if(error){
     			console.log("Une erreur est survenue lors de la connexion",error);
     			res.send({
