@@ -30,9 +30,9 @@ router.get('/', function(req, res) {
 
 
 //Route to handle user registration
-//router.post('/register',login.register);
+router.post('/register',login.register);
 router.post('/login',login.login);
-//router.get('/voyage',login.home);
+router.get('/voyage',login.voyage);
 app.use('/api', router);
 app.listen(port);
 

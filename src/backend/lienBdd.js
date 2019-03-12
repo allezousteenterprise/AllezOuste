@@ -63,6 +63,7 @@ exports.register = function(req,res){
 exports.login = function(req,res){
   	var identifiant = req.body.user.identifiant;
   	var password = req.body.user.password;
+	console.log("req :"+req);
   	connection.query('SELECT * FROM t_client_cli WHERE cli_pseudo = ?',[identifiant], function (error, results, fields) {
   		if(error){
     			console.log("Une erreur est survenue lors de la connexion",error);
@@ -81,6 +82,9 @@ exports.login = function(req,res){
             				});
       				}
       				else{
+
+					console.log("Password : "+password);
+					console.log("Results[0].motDePasse : "+results[0].motDePasse);
 					console.log("L\'identifiant et mot de passe ne correspondent pas !");
         				res.send({
           					"code":201,
@@ -98,7 +102,7 @@ exports.login = function(req,res){
   		}
   	});
 }
-/*recuperation de la liste de cours*/
+/*recuperation de la liste de voyage*/
 exports.voyage = function(req,res){
   	connection.query('SELECT * FROM t_voyage_voy', function (error, results, fields) {
   		if(error){
@@ -109,7 +113,7 @@ exports.voyage = function(req,res){
     			})
   		}else{
     			if(results.length == 0){
-				console.log("Aucune ligne trouvée dans la table cours !");
+				console.log("Aucune ligne trouvé dans la table cours !");
 				res.send({
   					"code":200,
   					"success":"Pas de voyage disponible !"
