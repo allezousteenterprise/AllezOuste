@@ -63,7 +63,10 @@ exports.register = function(req,res){
 exports.login = function(req,res){
   	var identifiant = req.body.user.identifiant;
   	var password = req.body.user.password;
-	console.log("req :"+req);
+	
+	console.log("Identifiant React :" + identifiant);
+	console.log(" MdP React :" + password);
+
   	connection.query('SELECT * FROM t_client_cli WHERE cli_pseudo = ?',[identifiant], function (error, results, fields) {
   		if(error){
     			console.log("Une erreur est survenue lors de la connexion",error);
@@ -74,7 +77,7 @@ exports.login = function(req,res){
   		}else{
 			console.log(results);
     			if(results.length >0){
-      				if(results[0].motDePasse == password){
+      				if(results[0].cli_mdp == password){
 					console.log("L\'utilisateur est connecté à la base de données !");
         				res.send({
           					"code":200,
@@ -82,9 +85,6 @@ exports.login = function(req,res){
             				});
       				}
       				else{
-
-					console.log("Password : "+password);
-					console.log("Results[0].motDePasse : "+results[0].motDePasse);
 					console.log("L\'identifiant et mot de passe ne correspondent pas !");
         				res.send({
           					"code":201,

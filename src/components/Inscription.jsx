@@ -1,10 +1,58 @@
 import React, { Component } from 'react';
-//import axios from 'axios';
+import axios from 'axios';
 import Navbar from './Navbar';
 
 export default class Inscription extends Component {
-	render(){
-		return (
+
+    constructor() {
+        super();
+        this.state = {
+	    identifiant: '',
+            email: '',
+	    nom: '',
+	    prenom: '',
+            password: '',
+            password_confirm: '',
+            errors: {}
+        }
+        this.handleInputChange = this.handleInputChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    handleInputChange(e) {
+        this.setState({
+            [e.target.name]: e.target.value
+        })
+    }
+
+    handleSubmit(e) {
+        e.preventDefault();
+        const user = {
+	    identifiant: this.state.identifiant,
+	    nom: this.state.nom,
+	    prenom: this.state.prenom,
+            email: this.state.email,
+            password: this.state.password,
+            password_confirm: this.state.password_confirm
+        }
+        console.log(user);
+	axios.post(`/api/register`, { user })
+      .then(res => {
+        console.log(res);
+        if (res.data.code==="400") {
+            alert(res.data.failed);
+        }else{
+		if(res.data.code===200)
+			document.location.href="/inscrit";
+		else
+            		alert(res.data.success);
+        }
+      })
+    }
+
+    render(){
+	return (
+
 <div>
     <Navbar/>
     <div class="w3-display-middle w3-margin-top w3-center w3-card-4">
@@ -22,7 +70,9 @@ export default class Inscription extends Component {
 			 placeholder="Identifiant"
 			 class="w3-input w3-border w3-round w3-light-grey"
 			 name="identifiant"
-			 required/>
+			 required
+			 onChange={ this.handleInputChange }
+			 value={ this.state.identifiant }/>
 		    </div>
 
 			<p></p>
@@ -33,7 +83,10 @@ export default class Inscription extends Component {
 			placeholder="Email"
 			class="w3-input w3-border w3-round w3-light-grey"
 			name="email"
-			required/>
+			required
+			onChange={ this.handleInputChange }
+			value={ this.state.email }
+			/>
 		    </div>
 			<p></p>
 
@@ -43,7 +96,10 @@ export default class Inscription extends Component {
 			 placeholder="Nom"
 			 class="w3-input w3-border w3-round w3-light-grey"
 			 name="nom"
-			 required/>
+			 required
+			 onChange={ this.handleInputChange }
+			 value={ this.state.nom }
+			 />
 		    </div>
 			<p></p>
 
@@ -53,7 +109,10 @@ export default class Inscription extends Component {
 			 placeholder="Prenom"
 			 class="w3-input w3-border w3-round w3-light-grey"
 			 name="prenom"
-			 required/>
+			 required
+			 onChange={ this.handleInputChange }
+			 value={ this.state.prenom }
+			 />
 		    </div>
 			<p></p>
 
@@ -63,7 +122,10 @@ export default class Inscription extends Component {
 			placeholder="Mot de Passe"
 			class="w3-input w3-border w3-round w3-light-grey"
 			name="password"
-			required/>
+			required
+			onChange={ this.handleInputChange }
+			value={ this.state.password }
+			/>
 		    </div>
 			<p></p>
 		
@@ -72,8 +134,11 @@ export default class Inscription extends Component {
 			type="password"
 			placeholder="Confirmation MotDePasse"
 			class="w3-input w3-border w3-round w3-light-grey"
-			name="confirmationpassword"
-			required/>
+			name="password_confirm"
+			required
+			onChange={ this.handleInputChange }
+			value={ this.state.password_confirm }
+			/>
 		    </div>
 			<p></p>
 
@@ -88,6 +153,6 @@ export default class Inscription extends Component {
 	</form>
 		
     </div>
-</div>		);
+</div>		)
 	}
 }
