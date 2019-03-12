@@ -36,7 +36,7 @@ export default class Inscription extends Component {
             password_confirm: this.state.password_confirm
         }
         console.log(user);
-	axios.post(`/api/register`, { user })
+	axios.post(`http://localhost:9000/api/register`, { user })
       .then(res => {
         console.log(res);
         if (res.data.code==="400") {
@@ -61,7 +61,7 @@ export default class Inscription extends Component {
 		<h2>Inscription</h2>
 	</div>
       
-	<form class="w3-container  w3-padding-24">
+	<form class="w3-container  w3-padding-24" onSubmit={ this.handleSubmit }>
 		<div>
 			<p></p>
 		    <div>

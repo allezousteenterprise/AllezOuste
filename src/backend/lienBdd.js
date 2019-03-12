@@ -17,7 +17,10 @@ exports.register = function(req,res){
   	console.log("req",req.body);
   	var users={
     		"cli_pseudo":req.body.user.identifiant,
-    		"cli_mdp":req.body.user.password
+    		"cli_mdp":req.body.user.password,
+		"cli_prenom":req.body.user.prenom,
+		"cli_nom":req.body.user.nom,
+		"cli_email":req.body.user.mail
   	}
 	var loginTest = req.body.user.identifiant;
   	connection.query('INSERT INTO t_client_cli SET ?',users, function (error, results, fields) {
@@ -34,7 +37,7 @@ exports.register = function(req,res){
 			}
 			//case of insert line into table
 			else{
-				if(req.body.user.password !== req.body.user.confirmationpassword){
+				if(req.body.user.password !== req.body.user.password_confirm){
 					console.log("Le mot de passe et sa confirmation doivent être pareil !");
 					res.send({
 		      				"code":201,
