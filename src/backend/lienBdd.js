@@ -20,8 +20,9 @@ exports.register = function(req,res){
     		"cli_mdp":req.body.user.password,
 		"cli_prenom":req.body.user.prenom,
 		"cli_nom":req.body.user.nom,
-		"cli_email":req.body.user.mail
+		"cli_mail":req.body.user.email
   	}
+
 	var loginTest = req.body.user.identifiant;
   	connection.query('INSERT INTO t_client_cli SET ?',users, function (error, results, fields) {
 		//select of databaselines with same identify 
@@ -66,9 +67,6 @@ exports.register = function(req,res){
 exports.login = function(req,res){
   	var identifiant = req.body.user.identifiant;
   	var password = req.body.user.password;
-	
-	console.log("Identifiant React :" + identifiant);
-	console.log(" MdP React :" + password);
 
   	connection.query('SELECT * FROM t_client_cli WHERE cli_pseudo = ?',[identifiant], function (error, results, fields) {
   		if(error){
