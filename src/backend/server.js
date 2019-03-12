@@ -7,6 +7,7 @@ var util = require('util');
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
+var login = require('./lienBdd');
 var port = 9000;
 
 /** 
@@ -22,15 +23,19 @@ app.use(function(req, res, next) {
 });
 
 // Test Route
-app.get('/', function(req, res) {
+
+var router = express.Router();
+
+router.get('/', function(req, res) {
     console.log("Lancement du serveur");
     res.send('Hello World');
 });
 
-app.get('/voyages',function(req, res) {
-	res.send("Donnees SQL Voyages");
-});
 
 //Route to handle user registration
+router.post('/register',login.register);
+router.post('/login',login.login);
+router.get('/voyage',login.home);
+app.use('/api', router);
 app.listen(port);
 
