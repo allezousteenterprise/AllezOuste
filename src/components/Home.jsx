@@ -4,10 +4,17 @@ import Navbar from './Navbar';
 import photosaccueil from './photos/airplane.jpg';
 
 export default class Home extends Component {
+
+	constructor(props) {
+		super(props);
+		this.state = {
+			history:this.props.history,		
+		}
+	}
 	render(){
 		return (
 			<div>
-				<Navbar/>
+				<Navbar history={this.state.history} />
 				<div class="w3-display-container w3-wide">
 					<img class="w3-image" src={photosaccueil} alt="Agence de voyages"/>
 					<div class="w3-display-middle w3-margin-top w3-center">

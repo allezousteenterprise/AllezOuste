@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-
+import {createBrowserHistory} from 'history';
 import {
-    BrowserRouter as Router,
+    Router,
+Switch,
     Route
 } from 'react-router-dom';
 import Home from './components/Home';
@@ -13,13 +14,14 @@ import 'w3-css/w3.css';
 class App extends Component {
     render() {
         return (
-		<Router>
-		<div>
-			<Route exact path="/" component={ Home } />
-			<Route path="/voyages" component={ Voyages } />
-			<Route path="/connexion" component={ Connexion } />
-			<Route path="/inscription" component={ Inscription } />
-		</div>
+		<Router history={createBrowserHistory()}>
+			<Switch>
+				<Route exact path="/" component={ Home } />
+				<Route path="/voyages" component={ Voyages } />
+				<Route path="/connexion" component={ Connexion } />
+				<Route path="/inscription" component={ Inscription } />
+				<Route component={ Home } />
+			</Switch>
 		</Router>
         );
     };
