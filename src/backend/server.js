@@ -29,6 +29,7 @@ router.get('/', function(req, res) {
 });
 
 
+
 //Route to handle user registration
 router.post('/register',login.register);
 router.post('/login',login.login);

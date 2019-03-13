@@ -4,8 +4,8 @@ import Navbar from './Navbar';
 
 export default class Voyages extends Component {
 
-	constructor() {
-		super();
+	constructor(props) {
+		super(props);
 
 		this.state = {
 		    destinations: {},
@@ -14,17 +14,24 @@ export default class Voyages extends Component {
 		    voyages: {},
 		    errors: {}
 		}
+		
+		/*axios.get(`http://localhost:9000/api/destinations`).then(res => {
 
-		axios.get(`http://localhost:9000/api/destinations`).then(res => {
-			console.log("Recuperation des Destinations");
-			this.state.destinations = res.data;
-		});
+			let tableauxdestinations = {}
+			let i;
+			for(i=0; i<res.data.success.length; i++){
+					tableauxdestinations.add(<option value="i">{res.data.success[i].voy_nom}</option>);
+			}
 
-		/*axios.get(`http://localhost:9000/api/ensembleTypes`).then(res => {
-			console.log("Recuperation des types");
+			this.setState({
+				destinations: tableauxdestinations
+			})
+
+			{this.state.destinations}		
+
+	
 		});*/
 	}
-
 
 
 	render(){
@@ -37,7 +44,6 @@ export default class Voyages extends Component {
 			<div class="w3-row-padding w3-section w3-stretch">
 			<select class="w3-select w3-white w3-third w3-padding" name="pays">
 				<option value="" disabled selected>Destination</option>
-				<option value="1">{this.state.destinations}</option>
 			</select>
 
 

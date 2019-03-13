@@ -151,6 +151,7 @@ exports.voyage = function(req,res){
 
 /*Recuperation de la liste des destinations*/
 exports.destinations = function(req,res){
+	console
   	connection.query('SELECT voy_nom FROM t_voyage_voy', function (error, results, fields) {
   		if(error){
     			console.log("Une erreur est survenue lors de la connexion",error);
@@ -176,7 +177,7 @@ exports.destinations = function(req,res){
 				console.log("DestinationsDisponibles", monSet);
 				res.send({
 					"code":201,
-					"success":monSet,
+					"success":results,
 	  			});
     			}
   		}
