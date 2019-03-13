@@ -5,6 +5,8 @@ var connection = mysql.createConnection({
   	password : '2zc7yegl',
   	database : 'zfm1-zle_papre'
 });
+
+
 connection.connect(function(err){
 	if(!err) {
     		console.log("Connexion à la base de données effectuée !");
@@ -12,6 +14,8 @@ connection.connect(function(err){
     		console.log("Erreur de connexion à la base de données !");
 	}
 });
+
+
 /*action inscription*/
 exports.register = function(req,res){
   	console.log("req",req.body);
@@ -63,6 +67,8 @@ exports.register = function(req,res){
   		});
   	});
 }
+
+
 /*action de connexion*/
 exports.login = function(req,res){
   	var identifiant = req.body.user.identifiant;
@@ -103,6 +109,8 @@ exports.login = function(req,res){
   		}
   	});
 }
+
+
 /*recuperation de la liste de voyage*/
 exports.voyage = function(req,res){
   	connection.query('SELECT * FROM t_voyage_voy', function (error, results, fields) {
@@ -132,6 +140,40 @@ exports.voyage = function(req,res){
 				}
 				//console.log("ligne dans le set", monSet.size);
 				console.log("on a", monSet);
+				res.send({
+					"code":201,
+					"success":monSet,
+	  			});
+    			}
+  		}
+  	});
+}
+
+/*Recuperation de la liste des destinations*/
+exports.destinations = function(req,res){
+  	connection.query('SELECT voy_nom FROM t_voyage_voy', function (error, results, fields) {
+  		if(error){
+    			console.log("Une erreur est survenue lors de la connexion",error);
+    			res.send({
+      				"code":400,
+      				"failed":"Une erreur est survenue lors de la connexion !"
+    			})
+  		}else{
+    			if(results.length == 0){
+				console.log("Aucune ligne trouvé dans la table cours !");
+				res.send({
+  					"code":200,
+  					"success":"Pas de voyages disponibles !"
+    				});
+    			}
+    			else{
+				var i=0;
+				var monSet = new Set();
+				for(i=0; i<results.length; i++){
+					monSet.add(results[i].voy_nom);
+				}
+
+				console.log("DestinationsDisponibles", monSet);
 				res.send({
 					"code":201,
 					"success":monSet,

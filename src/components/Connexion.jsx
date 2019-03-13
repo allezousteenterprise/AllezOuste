@@ -22,11 +22,13 @@ export default class Connexion extends Component {
 	}
 		
 	handleSubmit(e) {
-		e.preventDefault();
+        	e.preventDefault();
+        
 		const user = {
 			identifiant: this.state.identifiant,
 			password: this.state.password
-		}		
+		}
+		
 		console.log(user);
 		axios.post('http://localhost:9000/api/login', {user}).then(
 		res => {
@@ -39,7 +41,13 @@ export default class Connexion extends Component {
 				else
 			    		alert(res.data.success);
 			}
-		})
+        })
+        
+        /*axios.post('Connexion', this.state.identifiant, this.state.password)
+        .then(res => {
+            console.log("Je suis dans React" + JSON.stringify(res.data));
+            this.props.handler(<h2>Bonjour {this.state.identification},  ton mot de passe est {this.state.password}</h2>)
+        })*/
 	}
 
 	render(){

@@ -1,17 +1,75 @@
 import React, { Component } from 'react';
-//import axios from 'axios';
+import axios from 'axios';
 import Navbar from './Navbar';
 
 export default class Voyages extends Component {
+
+	constructor() {
+		super();
+
+		this.state = {
+		    destinations: {},
+		    types: {},
+		    prix: {},
+		    voyages: {},
+		    errors: {}
+		}
+
+		axios.get(`http://localhost:9000/api/destinations`).then(res => {
+			console.log("Recuperation des Destinations");
+			this.state.destinations = res.data;
+		});
+
+		/*axios.get(`http://localhost:9000/api/ensembleTypes`).then(res => {
+			console.log("Recuperation des types");
+		});*/
+	}
+
+
+
 	render(){
 		return (
-			<div style={{marginTop:'46px'}}>
-				<Navbar/>
-				<div>
-					<h1>Allez Ouste!!</h1>
-					<h2>Voyage actuellement disponible chez AllezOuste :</h2>
-				</div>
+
+<div>
+	<Navbar/>
+	<div class="w3-container w3-margin-top w3-padding-48 w3-teal">
+		<form>
+			<div class="w3-row-padding w3-section w3-stretch">
+			<select class="w3-select w3-white w3-third w3-padding" name="pays">
+				<option value="" disabled selected>Destination</option>
+				<option value="1">{this.state.destinations}</option>
+			</select>
+
+
+			<select class="w3-select w3-white w3-third w3-padding" name="sejour">
+				<option value="" disabled selected>Type de Séjours</option>
+				<option value="1">Séjour</option>
+				<option value="2">Circuit</option>
+				<option value="3">Croisière</option>
+				<option value="4">Location</option>
+				<option value="5">Club-Vacances</option>
+			</select>
+
+			<select class="w3-select w3-white w3-third w3-padding" name="prix">
+				<option value="" disabled selected>Prix</option>
+				<option value="1">- 300 euros</option>
+				<option value="2">- 600 euros</option>
+				<option value="3">- 1000 euros</option>
+				<option value="3">- 2000 euros</option>
+				<option value="3">- 5000 euros</option>
+				<option value="3">+ 5000 euros</option>
+			</select>
+
 			</div>
+
+			<div class="w3-display-container">
+				<bouton class="w3-btn w3-white w3-middle">Rechercher</bouton>
+			</div>
+		</form>
+	</div>
+</div>
+
+
 		);
 	}
 }
