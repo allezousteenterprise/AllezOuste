@@ -30,7 +30,9 @@ export default class Connexion extends Component {
 		}
 		
 		console.log(user);
-		axios.post('http://localhost:9000/api/login', {user}).then(
+
+		//Node.js
+		/*axios.post('http://localhost:9000/api/login', {user}).then(
 		res => {
 			console.log(res);
 			if(res.data.code === 400){
@@ -41,13 +43,14 @@ export default class Connexion extends Component {
 				else
 			    		alert(res.data.success);
 			}
-        })
+        	})*/
         
-        /*axios.post('Connexion', this.state.identifiant, this.state.password)
-        .then(res => {
-            console.log("Je suis dans React" + JSON.stringify(res.data));
-            this.props.handler(<h2>Bonjour {this.state.identification},  ton mot de passe est {this.state.password}</h2>)
-        })*/
+		//Servlet
+		axios.post('Connexion', this.state.identifiant, this.state.password)
+		.then(res => {
+		    console.log("Je suis dans React : " + JSON.stringify(res.data));
+		    //this.props.handler(<h2>Bonjour {this.state.identification},  ton mot de passe est {this.state.password}</h2>)
+		})
 	}
 
 	render(){
