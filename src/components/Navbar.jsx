@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 class Navbar extends Component {
-	constructor(props) {
+    constructor(props) {
         super(props);
         this.state = {
             history:this.props.history,		
@@ -9,19 +9,19 @@ class Navbar extends Component {
     }
 
     _onclickHome(){
-        this.state.history.push({pathname:"/"});
+        this.state.history.push({pathname:"/TestServlet/"});
     }
     
     _onclickVoyage(){
-        this.state.history.push({pathname:"/voyages"});
+        this.state.history.push({pathname:"/TestServlet/voyages"});
     }
     
     _onclickConnexion(){
-        this.state.history.push({pathname:"/connexion"});
+        this.state.history.push({pathname:"/TestServlet/connexion"});
     }
     
     _onclickInscription(){
-        this.state.history.push({pathname:"/inscription"});
+        this.state.history.push({pathname:"/TestServlet/inscription"});
     }
     
     render() {
