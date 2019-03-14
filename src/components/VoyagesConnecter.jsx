@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import Navbar from './Navbar';
+import NavbarConnecter from './NavbarConnecter';
 
-export default class Voyages extends Component {
+export default class VoyagesConnecter extends Component {
 
 	constructor(props) {
 		super(props);
@@ -50,7 +50,7 @@ export default class Voyages extends Component {
 		return (
 
 <div>
-	<Navbar history={this.state.history}/>
+	<NavbarConnecter history={this.state.history}/>
 	<div className="w3-container w3-margin-top w3-padding-48 w3-teal">
 		<form onSubmit={ this.handleSubmit } >
 			<div className="w3-row-padding w3-section w3-stretch">

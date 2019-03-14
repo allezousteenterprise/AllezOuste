@@ -37,9 +37,25 @@ export default class Inscription extends Component {
             password_confirm: this.state.password_confirm
         }
         console.log(user);
-	    axios.post(`http://localhost:9000/api/register`, { user })
+	    
+
+	/*axios.post(`http://localhost:9000/api/register`, { user })
         .then(res => {
             console.log(res);
+            if (res.data.code==="400") {
+                alert(res.data.failed);
+            }else{
+            if(res.data.code===200)
+                document.location.href="/inscrit";
+            else
+                        alert(res.data.success);
+            }
+        })*/
+
+	//Servlet
+	axios.post('/TestServlet/inscription', { user })
+	.then(res => {
+            console.log(JSON.stringify(res.data));
             if (res.data.code==="400") {
                 alert(res.data.failed);
             }else{

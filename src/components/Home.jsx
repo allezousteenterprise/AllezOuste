@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-//import axios from 'axios';
 import Navbar from './Navbar';
 import photosaccueil from './photos/airplane.jpg';
 
