@@ -47,7 +47,7 @@ export default class Connexion extends Component {
         	})*/
         
 		//Servlet
-		axios.post('/Connexion', this.state.identifiant, this.state.password)
+		axios.post('/TestServlet/connexion', this.state.identifiant, this.state.password)
 		.then(res => {
 		    console.log("Je suis dans React : " + JSON.stringify(res.data));
 		    //this.props.handler(<h2>Bonjour {this.state.identification},  ton mot de passe est {this.state.password}</h2>)
