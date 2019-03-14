@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import {createBrowserHistory} from 'history';
 import {
     Router,
-Switch,
+    Switch,
     Route
 } from 'react-router-dom';
+
 import Home from './components/Home';
 import Voyages from './components/Voyages';
 import Connexion from './components/Connexion';

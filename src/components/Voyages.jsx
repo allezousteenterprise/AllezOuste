@@ -12,7 +12,8 @@ export default class Voyages extends Component {
 		    types: {},
 		    prix: {},
 		    voyages: {},
-		    errors: {}
+		    errors: {},
+            history:this.props.history,
 		}
 		
 		/*axios.get(`http://localhost:9000/api/destinations`).then(res => {
@@ -38,16 +39,16 @@ export default class Voyages extends Component {
 		return (
 
 <div>
-	<Navbar/>
-	<div class="w3-container w3-margin-top w3-padding-48 w3-teal">
+	<Navbar history={this.state.history}/>
+	<div className="w3-container w3-margin-top w3-padding-48 w3-teal">
 		<form>
-			<div class="w3-row-padding w3-section w3-stretch">
-			<select class="w3-select w3-white w3-third w3-padding" name="pays">
+			<div className="w3-row-padding w3-section w3-stretch">
+			<select className="w3-select w3-white w3-third w3-padding" name="pays">
 				<option value="" disabled selected>Destination</option>
 			</select>
 
 
-			<select class="w3-select w3-white w3-third w3-padding" name="sejour">
+			<select className="w3-select w3-white w3-third w3-padding" name="sejour">
 				<option value="" disabled selected>Type de Séjours</option>
 				<option value="1">Séjour</option>
 				<option value="2">Circuit</option>
@@ -56,7 +57,7 @@ export default class Voyages extends Component {
 				<option value="5">Club-Vacances</option>
 			</select>
 
-			<select class="w3-select w3-white w3-third w3-padding" name="prix">
+			<select className="w3-select w3-white w3-third w3-padding" name="prix">
 				<option value="" disabled selected>Prix</option>
 				<option value="1">- 300 euros</option>
 				<option value="2">- 600 euros</option>
@@ -68,8 +69,8 @@ export default class Voyages extends Component {
 
 			</div>
 
-			<div class="w3-display-container">
-				<bouton class="w3-btn w3-white w3-middle">Rechercher</bouton>
+			<div className="w3-display-container">
+				<bouton className="w3-btn w3-white w3-middle">Rechercher</bouton>
 			</div>
 		</form>
 	</div>

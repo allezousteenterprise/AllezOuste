@@ -4,12 +4,13 @@ import Navbar from './Navbar';
 
 export default class Connexion extends Component {
 
-	constructor() {
-		super();
+	constructor(props) {
+		super(props);
 		this.state = {
 			identifiant: '',
 			password: '',
-			errors: {}
+			errors: {},
+            history:this.props.history
 		}
 		this.handleInputChange = this.handleInputChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
@@ -56,21 +57,21 @@ export default class Connexion extends Component {
 	render(){
 		return (
 <div>
-    <Navbar/>
-    <div class="w3-display-middle w3-margin-top w3-center w3-card-4">
+    <Navbar history={this.state.history}/>
+    <div className="w3-display-middle w3-margin-top w3-center w3-card-4">
 
-	<div class="w3-container w3-teal">
+	<div className="w3-container w3-teal">
 		<h2>Connexion</h2>
 	</div>
       
-	<form class="w3-container w3-padding-24" onSubmit={ this.handleSubmit }>
+	<form className="w3-container w3-padding-24" onSubmit={ this.handleSubmit }>
 		<div>
 			<p></p>
 		    <div>
 		      <input
 			 type="text"
 			 placeholder="Identifiant"
-			 class="w3-input w3-border w3-round w3-light-grey"
+			 className="w3-input w3-border w3-round w3-light-grey"
 			 name="identifiant"
 			 required
 			 onChange={ this.handleInputChange }
@@ -82,7 +83,7 @@ export default class Connexion extends Component {
 		      <input
 			type="password"
 			placeholder="Mot de passe"
-			class="w3-input w3-border w3-round w3-light-grey"
+			className="w3-input w3-border w3-round w3-light-grey"
 			name="password"
 			required
 			onChange={ this.handleInputChange }
@@ -91,7 +92,7 @@ export default class Connexion extends Component {
 		    </div>
 			<p></p>
 		    <div>
-	 	      <button type="submit" class="w3-button w3-round-xxlarge w3-medium w3-border w3-padding-large w3-ripple">
+	 	      <button type="submit" className="w3-button w3-round-xxlarge w3-medium w3-border w3-padding-large w3-ripple">
 				Connectez-vous !
 		      </button>
 		    </div>	
@@ -104,5 +105,3 @@ export default class Connexion extends Component {
 		);
 	}
 }
-
-
