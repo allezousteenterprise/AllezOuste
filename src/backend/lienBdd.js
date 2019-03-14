@@ -71,10 +71,12 @@ exports.register = function(req,res){
 
 /*action de connexion*/
 exports.login = function(req,res){
-  	var identifiant = req.body.user.identifiant;
-  	var password = req.body.user.password;
+  	//var identifiant = req.body.user.identifiant;
+  	//var password = req.body.user.password;
+	
+	console.log(req);
 
-  	connection.query('SELECT * FROM t_client_cli WHERE cli_pseudo = ?',[identifiant], function (error, results, fields) {
+  	/*connection.query('SELECT * FROM t_client_cli WHERE cli_pseudo = ?',[identifiant], function (error, results, fields) {
   		if(error){
     			console.log("Une erreur est survenue lors de la connexion",error);
     			res.send({
@@ -107,7 +109,7 @@ exports.login = function(req,res){
           			});
     			}
   		}
-  	});
+  	});*/
 }
 
 
