@@ -17,10 +17,10 @@ class App extends Component {
         return (
 		<Router history={createBrowserHistory()}>
 			<Switch>
-				<Route exact path="/" component={ Home } />
-				<Route path="/voyages" component={ Voyages } />
-				<Route path="/connexion" component={ Connexion } />
-				<Route path="/inscription" component={ Inscription } />
+				<Route exact path="/TestServlet/" component={ Home } />
+				<Route path="/TestServlet/voyages" component={ Voyages } />
+				<Route path="/TestServlet/connexion" component={ Connexion } />
+				<Route path="/TestServlet/inscription" component={ Inscription } />
 				<Route component={ Home } />
 			</Switch>
 		</Router>
