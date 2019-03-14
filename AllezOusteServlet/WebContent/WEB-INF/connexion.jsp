@@ -5,12 +5,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Lister Voyages</title>
+<title> Connexion </title>
 </head>
 <body>
 
 
-<h1>Liste des voyages</h1>
+<h1>Connexion</h1>
 
 <ul>
 <c:forEach items="${lst}" var="item">

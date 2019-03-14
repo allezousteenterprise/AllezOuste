@@ -16,10 +16,35 @@ var fs = require('fs');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+var fic_index = process.cwd() + "/build/index.html";
+
+if (!fs.existsSync(fic_index)) {
+    console.log(fic_index + " not found");
+}
+app.use(express.static('build'));
+
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
+});
+
+app.get('*', function (req, res) {
+    console.log("/*");
+    res.sendFile(fic_index);
+});
+
+app.post('*', function (req, res) {
+
+    console.log('param = ' + JSON.stringify(req.body));
+
+           axios.post('http://localhost:8080/AllezOusteServlet/'+req.url, 
+            req.body)
+            .then(res2 => {
+                console.log(JSON.stringify(res2.data));
+                res.send(res2.data);
+            })
+
 });
 
 // Test Route
