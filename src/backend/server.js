@@ -6,6 +6,9 @@ var app = express();
 var bodyParser = require('body-parser');
 var login = require('./lienBdd');
 var port = 9000;
+var axios = require('axios');
+var util = require('util');
+var fs = require('fs');
 
 /** 
  * Config General
