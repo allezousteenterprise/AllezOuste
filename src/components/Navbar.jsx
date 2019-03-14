@@ -8,6 +8,10 @@ class Navbar extends Component {
         }
     }
 
+    _onclickHome(){
+        this.state.history.push({pathname:"/"});
+    }
+    
     _onclickVoyage(){
         this.state.history.push({pathname:"/voyages"});
     }
@@ -26,7 +30,7 @@ class Navbar extends Component {
 		<div className="w3-bar w3-white w3-padding w3-wide w3-card">
 		        <div className="collapse navbar-collapse" id="navbarSupportedContent">
 	
-				<a href="/" className="w3-bar-item w3-button w3-padding-large"><b>A</b>llez<b>O</b>uste</a>
+                <button onClick={this._onclickHome.bind(this)} className="w3-bar-item w3-button w3-padding-large"><b>A</b>llez<b>O</b>uste</button>
 
 				<div class="w3-right w3-hide-small">
 					<button onClick={this._onclickVoyage.bind(this)} className="w3-bar-item w3-button w3-padding-large">Voyages</button>
