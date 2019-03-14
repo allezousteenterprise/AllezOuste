@@ -32,7 +32,7 @@ class Navbar extends Component {
 	
                 <button onClick={this._onclickHome.bind(this)} className="w3-bar-item w3-button w3-padding-large"><b>A</b>llez<b>O</b>uste</button>
 
-				<div class="w3-right w3-hide-small">
+				<div className="w3-right w3-hide-small">
 					<button onClick={this._onclickVoyage.bind(this)} className="w3-bar-item w3-button w3-padding-large">Voyages</button>
                     <button onClick={this._onclickConnexion.bind(this)} className="w3-bar-item w3-button w3-padding-large">Connexion</button>
                     <button onClick={this._onclickInscription.bind(this)} className="w3-bar-item w3-button w3-padding-large">Inscription</button>
