@@ -10,10 +10,14 @@ export default class Connexion extends Component {
 			identifiant: '',
 			password: '',
 			errors: {},
-            history:this.props.history
+            		history:this.props.history
 		}
 		this.handleInputChange = this.handleInputChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
+	}
+
+	_onclickProfil(){
+		this.state.history.push({pathname:"/TestServlet/profil"});
 	}
 	
 	handleInputChange(e) {
@@ -32,31 +36,36 @@ export default class Connexion extends Component {
 		
 		console.log(user);
 
-		//Node.js
-		/*axios.post('http://localhost:9000/api/login', {user}).then(
-		res => {
-			console.log(res);
-			if(res.data.code === 400){
-				alert(res.data.failed);
-			}else{
-				if(res.data.code===200)
-					document.location.href="/profil";
-				else
-			    		alert(res.data.success);
-			}
-        	})*/
-        
 		//Servlet
 		axios.post('/TestServlet/connexion', {user})
 		.then(res => {
-			console.log(JSON.stringify(res.data))
-			if(res.data.code === 400){
+			//var test = JSON.parse(res);
+			console.log("test test");
+			console.log(res);
+			console.log("test2 test2");
+			console.log(res.data);
+			console.log("test3 test3");
+			var bla = JSON.parse(res.data);
+			console.log(bla.code);
+			console.log("test4 test4");
+			console.log(bla);
+			console.log("test5 test5");
+			console.log(bla.success.user);
+			console.log("test6 test6");
+			console.log(bla.success.user.identifiant);
+			console.log("test7 test7");
+
+
+			if(bla.code === 400){
 				alert(res.data.failed);
 			}else{
-				if(res.data.code===200)
-					document.location.href="/TestServlet/profil";
-				else
-			    		alert(res.data.success);
+				if(bla.code===200){
+					alert("Bravo vous etes co");
+					sessionStorage.setItem('identifiant', bla.success.user.identifiant);
+					this._onclickProfil();
+				}else{
+			    		alert(res.data.success);	
+				}
 			}
 		})
 	}
