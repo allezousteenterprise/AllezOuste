@@ -10,10 +10,14 @@ export default class Connexion extends Component {
 			identifiant: '',
 			password: '',
 			errors: {},
-            history:this.props.history
+            		history:this.props.history
 		}
 		this.handleInputChange = this.handleInputChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
+	}
+
+	_onclickProfil(){
+		this.state.history.push({pathname:"/TestServlet/profil"});
 	}
 	
 	handleInputChange(e) {
@@ -35,14 +39,17 @@ export default class Connexion extends Component {
 		//Servlet
 		axios.post('/TestServlet/connexion', {user})
 		.then(res => {
-			console.log(JSON.stringify(res.data))
-			if(res.data.code === 400){
-				alert(res.data.failed);
+			var resultat = JSON.parse(res.data);
+
+			if(resultat.code === 400){
+				alert(resultat.data.failed);
 			}else{
-				if(res.data.code===200)
-					document.location.href="/TestServlet/profil";
-				else
-			    		alert(res.data.success);
+				if(resultat.code===200){
+					sessionStorage.setItem('identifiant', resultat.success.user.identifiant);
+					this._onclickProfil();
+				}else{
+			    		alert(res.data.success);	
+				}
 			}
 		})
 	}
