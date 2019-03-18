@@ -7,6 +7,15 @@ var connection = mysql.createConnection({
 });
 
 
+connection.connect(function(err){
+	if(!err) {
+		console.log("Connexion à la base de données effectuée !");
+	}else{
+		console.log("Erreur de connexion à la base de données !");
+	}
+
+});
+
 
 
 /*action inscription*/
@@ -24,17 +33,10 @@ exports.register = function(req,res){
 
 
 	console.log(users);
+	var insertion = false;
 
 	try{
-		connection.connect(function(err){
-			if(!err) {
-				console.log("Connexion à la base de données effectuée !");
-			}else{
-				console.log("Erreur de connexion à la base de données !");
-			}
 		
-		});
-
 		//Verification si pseudonyme existe
 		connection.query('SELECT * FROM t_client_cli WHERE cli_pseudo = ?',[obj.user.identifiant], function (error, results, fields) {
 
@@ -61,15 +63,9 @@ exports.register = function(req,res){
 
 			}else{
 				console.log(4);
-				
-				connection.query('INSERT INTO t_client_cli SET ?',[users], function (error, results, fields) {
-					console.log(results);
-					console.log(fields);
-					console.log(error);
-
-					console.trace('fatal error: ' + error.message);
+				connection.query('INSERT INTO t_client_cli SET ?',users, function (error, results, fields) {
 					res.send({
-						"code":200,
+						"code":200,							
 						"success":"Un nouvel utilisateur est enregistré dans la base de données !"
 					});
 				});
@@ -79,8 +75,6 @@ exports.register = function(req,res){
 
 	} catch (err){
 		console.log(err);
-	}finally{
-		connection.end();
 	}
 
 }
@@ -95,14 +89,6 @@ exports.login = function(req,res){
   	var password = obj.user.password;
 
 	try{
-		connection.connect(function(err){
-			if(!err) {
-				console.log("Connexion à la base de données effectuée !");
-			}else{
-				console.log("Erreur de connexion à la base de données !");
-			}
-		
-		});
 
 	  	connection.query('SELECT * FROM t_client_cli WHERE cli_pseudo = ?',[identifiant], function (error, results, fields) {
 	  		if(error){
@@ -120,6 +106,8 @@ exports.login = function(req,res){
 		  					"code":200,
 		  					"success": obj
 		    				});
+
+						
 	      				}
 	      				else{
 						console.log("L\'identifiant et le mot de passe ne correspondent pas !");
@@ -141,8 +129,6 @@ exports.login = function(req,res){
 
 	} catch (err){
 		console.log(err);
-	}finally{
-		connection.end();
 	}
 }
 
