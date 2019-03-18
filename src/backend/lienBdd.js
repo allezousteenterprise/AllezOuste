@@ -22,6 +22,9 @@ exports.register = function(req,res){
 		"cli_mail":obj.user.email
   	}
 
+
+	console.log(users);
+
 	try{
 		connection.connect(function(err){
 			if(!err) {
@@ -36,35 +39,40 @@ exports.register = function(req,res){
 		connection.query('SELECT * FROM t_client_cli WHERE cli_pseudo = ?',[obj.user.identifiant], function (error, results, fields) {
 
     			if(results.length >= 1){
-
+				console.log(1);
 				res.send({
 					"code":202,
 					"success":"Le pseudonyme existe déjà dans la base de données. Veuillez en choisir un nouveau !"
 				});
 
 			}else if(obj.user.password !== obj.user.password_confirm){
-
+				console.log(2);
 				res.send({
 	      				"code":201,
 	      				"success":"Le mot de passe et sa confirmation doivent être pareil !"
 				});
 
 			}else if(error) {
-
+				console.log(3);
 				res.send({
 					"code":400,
 					"failed":"Une erreur est survenue lors de la connexion !"
 				});
 
 			}else{
+				console.log(4);
+				
+				connection.query('INSERT INTO t_client_cli SET ?',[users], function (error, results, fields) {
+					console.log(results);
+					console.log(fields);
+					console.log(error);
 
-				connection.query('INSERT INTO t_client_cli SET ?',users, function (error, results, fields) {
-
+					console.trace('fatal error: ' + error.message);
 					res.send({
 						"code":200,
 						"success":"Un nouvel utilisateur est enregistré dans la base de données !"
 					});
-				}
+				});
 			}
 			
   		});
