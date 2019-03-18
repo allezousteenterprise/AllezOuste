@@ -9,12 +9,14 @@ export default class Voyages extends Component {
 
 		this.state = {
 		    destinations: {},
+		    types: {},
+		    prix: {},
 		    voyages: {},
 		    errors: {},
             	    history:this.props.history,
 		}
 
-		/*axios.get('/TestServlet/destinations').then(res => {
+		axios.get('/TestServlet/destinations').then(res => {
 			let tableauxdestinations = {}
 			let i;
 			for(i=0; i<res.data.length; i++){
@@ -26,24 +28,30 @@ export default class Voyages extends Component {
 			this.setState({
 				destinations: tableauxdestinations
 			})
-		});*/
+		});
 
-		//this.handleInputChange = this.handleInputChange.bind(this);
-        	//this.handleSubmit = this.handleSubmit.bind(this);
+		axios.get('/TestServlet/typesvoyages').then(res => {
+			let tableauxtypes = {}
+			let i;
+			for(i=0; i<res.data.length; i++){
+				tableauxtypes.add(
+					<option value="i">{res.data.success[i].voy_types}</option>
+				);
+			}
+
+			this.setState({
+				types: tableauxtypes
+			})
+		});
 	}
 
-	handleInputChange(e) {
-		this.setState({
-		    [e.target.name]: e.target.value
-		})
-	}
 
 	render(){
 		return (
 
 <div>
 	<Navbar history={this.state.history}/>
-	<div className="w3-display-container w3-margin-top w3-padding-48 w3-teal">
+	<div className="w3-container w3-margin-top w3-padding-48 w3-teal">
 		<form onSubmit={ this.handleSubmit } >
 			<div className="w3-row-padding w3-section w3-stretch">
 			<select className="w3-select w3-white w3-third w3-padding" name="pays">
@@ -51,11 +59,26 @@ export default class Voyages extends Component {
 				{this.state.destinations}
 			</select>
 
+
+			<select className="w3-select w3-white w3-third w3-padding" name="sejour">
+				{this.state.types}
+			</select>
+
+			<select className="w3-select w3-white w3-third w3-padding" name="prix">
+				<option value="" disabled selected>Prix</option>
+				<option value="1">- 300 euros</option>
+				<option value="2">- 600 euros</option>
+				<option value="3">- 1000 euros</option>
+				<option value="3">- 2000 euros</option>
+				<option value="3">- 5000 euros</option>
+				<option value="3">+ 5000 euros</option>
+			</select>
+
 			</div>
 
-			<div className="w3-top-right">
+			<div className="w3-display-container">
 				<bouton type="submit" className="w3-btn w3-white w3-middle">Rechercher</bouton>
-			</div>   
+			</div>
 		</form>
 	</div>
 </div>
