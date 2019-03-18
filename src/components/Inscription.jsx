@@ -26,6 +26,10 @@ export default class Inscription extends Component {
         })
     }
 
+    _onclickInscription(){
+		this.state.history.push({pathname:"/TestServlet/inscription"});
+    }
+
     handleSubmit(e) {
         e.preventDefault();
         const user = {
@@ -41,15 +45,17 @@ export default class Inscription extends Component {
 	//Servlet
 	axios.post('/TestServlet/inscription', { user })
 	.then(res => {
-            console.log(JSON.stringify(res.data));
-            if (res.data.code==="400") {
-                alert(res.data.failed);
+            var resultat = JSON.parse(res.data);
+		console(resultat);
+            if (resultat.code==="400") {
+                alert(resultat.failed);
             }else{
-            if(res.data.code===200)
-                document.location.href="/inscrit";
-            else
-                        alert(res.data.success);
-            }
+		 if(resultat.code===200){
+			this._onclickInscription();
+		}else{
+	    		alert(resultat.success);	
+		}
+	   }
         })
     }
 

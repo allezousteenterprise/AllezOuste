@@ -40,15 +40,16 @@ export default class Connexion extends Component {
 		axios.post('/TestServlet/connexion', {user})
 		.then(res => {
 			var resultat = JSON.parse(res.data);
+			console(resultat);
 
 			if(resultat.code === 400){
-				alert(resultat.data.failed);
+				alert(resultat.failed);
 			}else{
 				if(resultat.code===200){
 					sessionStorage.setItem('identifiant', resultat.success.user.identifiant);
 					this._onclickProfil();
 				}else{
-			    		alert(res.data.success);	
+			    		alert(resultat.success);	
 				}
 			}
 		})
