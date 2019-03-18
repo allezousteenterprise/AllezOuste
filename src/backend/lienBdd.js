@@ -11,57 +11,63 @@ var connection = mysql.createConnection({
 
 /*action inscription*/
 exports.register = function(req,res){
-  	console.log("req",req.body);
+
+	var obj = JSON.parse(req.body.json);
+
   	var users={
-    		"cli_pseudo":req.body.user.identifiant,
-    		"cli_mdp":req.body.user.password,
-		"cli_prenom":req.body.user.prenom,
-		"cli_nom":req.body.user.nom,
-		"cli_mail":req.body.user.email
+    		"cli_pseudo":obj.user.identifiant,
+    		"cli_mdp":obj.user.password,
+		"cli_prenom":obj.user.prenom,
+		"cli_nom":obj.user.nom,
+		"cli_mail":obj.user.email
   	}
 
-	var loginTest = req.body.user.identifiant;
-
 	try{
-		connection.connect();
-	  	connection.query('INSERT INTO t_client_cli SET ?',users, function (error, results, fields) {
-			//select of databaselines with same identify 
-			connection.query('SELECT * FROM t_client_cli WHERE cli_pseudo = ?',[loginTest], function (error, results, fields) {
+		connection.connect(function(err){
+			if(!err) {
+				console.log("Connexion à la base de données effectuée !");
+			}else{
+				console.log("Erreur de connexion à la base de données !");
+			}
+		
+		});
 
-				console.log("nombre utilisateur au pseudo de connect", results.length);
-	    			if(results.length >= 2){
-					console.log("Le pseudonyme existe déjà dans la base de données. Veuillez en choisir un nouveau !");
+		//Verification si pseudonyme existe
+		connection.query('SELECT * FROM t_client_cli WHERE cli_pseudo = ?',[obj.user.identifiant], function (error, results, fields) {
+
+    			if(results.length >= 1){
+
+				res.send({
+					"code":202,
+					"success":"Le pseudonyme existe déjà dans la base de données. Veuillez en choisir un nouveau !"
+				});
+
+			}else if(obj.user.password !== obj.user.password_confirm){
+
+				res.send({
+	      				"code":201,
+	      				"success":"Le mot de passe et sa confirmation doivent être pareil !"
+				});
+
+			}else if(error) {
+
+				res.send({
+					"code":400,
+					"failed":"Une erreur est survenue lors de la connexion !"
+				});
+
+			}else{
+
+				connection.query('INSERT INTO t_client_cli SET ?',users, function (error, results, fields) {
+
 					res.send({
-						"code":202,
-						"success":"Le pseudonyme existe déjà dans la base de données. Veuillez en choisir un nouveau !"
+						"code":200,
+						"success":"Un nouvel utilisateur est enregistré dans la base de données !"
 					});
 				}
-				//case of insert line into table
-				else{
-					if(req.body.user.password !== req.body.user.password_confirm){
-						console.log("Le mot de passe et sa confirmation doivent être pareil !");
-						res.send({
-			      				"code":201,
-			      				"success":"Le mot de passe et sa confirmation doivent être pareil !"
-						});
-					}
-	  				else if(error) {
-	    					console.log("Une erreur est survenue lors de la connexion !",error);
-	    					res.send({
-	      						"code":400,
-	      						"failed":"Une erreur est survenue lors de la connexion !"
-	    					})
-	  				}else{
-						console.log("Un nouvel utilisateur est enregistré dans la base de données !");
-	    					res.send({
-	      						"code":200,
-	      						"success":"Un nouvel utilisateur est enregistré dans la base de données !"
-						});
-	  				}
-				}
-				
-	  		});
-	  	});
+			}
+			
+  		});
 
 	} catch (err){
 		console.log(err);
@@ -81,7 +87,15 @@ exports.login = function(req,res){
   	var password = obj.user.password;
 
 	try{
-		connection.connect();
+		connection.connect(function(err){
+			if(!err) {
+				console.log("Connexion à la base de données effectuée !");
+			}else{
+				console.log("Erreur de connexion à la base de données !");
+			}
+		
+		});
+
 	  	connection.query('SELECT * FROM t_client_cli WHERE cli_pseudo = ?',[identifiant], function (error, results, fields) {
 	  		if(error){
 	    			console.log("Une erreur est survenue lors de la connexion",error);
@@ -93,14 +107,14 @@ exports.login = function(req,res){
 				console.log(results);
 	    			if(results.length >0){
 	      				if(results[0].cli_mdp == password){
-						console.log("L\'utilisateur est connecté à la base de données !");
+						console.log("L\'utilisateur "+identifiant+" est maintnenant connecté !");
 						res.send({
 		  					"code":200,
 		  					"success": obj
 		    				});
 	      				}
 	      				else{
-						console.log("L\'identifiant et mot de passe ne correspondent pas !");
+						console.log("L\'identifiant et le mot de passe ne correspondent pas !");
 						res.send({
 		  					"code":201,
 		  					"success":"L\'identifiant et le mot de passe ne correspondent pas !"
@@ -111,7 +125,7 @@ exports.login = function(req,res){
 					console.log("L\'identifiant entrée n\'existe pas dans la base de données. Veuillez vérifier !");
 	      				res.send({
 						"code":202,
-						"success":"L\'identifiant entrée n\'existe pas dans la base de données. Veuillez vérifier !"
+						"success":"L\'identifiant entrée n\'existe pas. Veuillez réessayez !"
 		  			});
 	    			}
 	  		}
@@ -128,7 +142,15 @@ exports.login = function(req,res){
 /*recuperation de la liste de voyage*/
 exports.voyage = function(req,res){
 	try{
-		connection.connect();
+		connection.connect(function(err){
+			if(!err) {
+				console.log("Connexion à la base de données effectuée !");
+			}else{
+				console.log("Erreur de connexion à la base de données !");
+			}
+		
+		});
+
 	  	connection.query('SELECT * FROM t_voyage_voy', function (error, results, fields) {
 	  		if(error){
 	    			console.log("Une erreur est survenue lors de la connexion",error);
@@ -174,7 +196,16 @@ exports.voyage = function(req,res){
 /*Recuperation de la liste des destinations*/
 exports.destinations = function(req,res){
 	try{
-		connection.connect();
+		connection.connect(function(err){
+			if(!err) {
+				console.log("Connexion à la base de données effectuée !");
+			}else{
+				console.log("Erreur de connexion à la base de données !");
+			}
+		
+		});
+
+
   		connection.query('SELECT voy_nom FROM t_voyage_voy', function (error, results, fields) {
   		if(error){
     			console.log("Une erreur est survenue lors de la connexion",error);

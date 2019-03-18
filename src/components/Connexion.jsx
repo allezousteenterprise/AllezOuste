@@ -39,29 +39,13 @@ export default class Connexion extends Component {
 		//Servlet
 		axios.post('/TestServlet/connexion', {user})
 		.then(res => {
-			//var test = JSON.parse(res);
-			console.log("test test");
-			console.log(res);
-			console.log("test2 test2");
-			console.log(res.data);
-			console.log("test3 test3");
-			var bla = JSON.parse(res.data);
-			console.log(bla.code);
-			console.log("test4 test4");
-			console.log(bla);
-			console.log("test5 test5");
-			console.log(bla.success.user);
-			console.log("test6 test6");
-			console.log(bla.success.user.identifiant);
-			console.log("test7 test7");
+			var resultat = JSON.parse(res.data);
 
-
-			if(bla.code === 400){
-				alert(res.data.failed);
+			if(resultat.code === 400){
+				alert(resultat.data.failed);
 			}else{
-				if(bla.code===200){
-					alert("Bravo vous etes co");
-					sessionStorage.setItem('identifiant', bla.success.user.identifiant);
+				if(resultat.code===200){
+					sessionStorage.setItem('identifiant', resultat.success.user.identifiant);
 					this._onclickProfil();
 				}else{
 			    		alert(res.data.success);	
