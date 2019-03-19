@@ -25,13 +25,14 @@ import bean.Utilisateur;
 /**
  * Servlet implementation class Lister
  */
-@WebServlet("/connexion")
-public class Connexion extends HttpServlet {
+@WebServlet("/mettreHistorique")
+public class MettreHistorique extends HttpServlet {
+	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Connexion() {
+    public MettreHistorique() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -47,13 +48,12 @@ public class Connexion extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		System.out.println("Servlet Connexion");
+
+		System.out.println("Servlet Mettre Historique");
 
 		String json = request.getReader().readLine();
 		System.out.println("json = "+json);
-		String res = Post.send("http://localhost:9000/api/login","json="+json);
-		System.out.println(res);
+		String res = Post.send("http://localhost:9000/api/mettreHistorique","json="+json);
 		
 		ServletOutputStream out = response.getOutputStream();
 		ObjectMapper objectMapper = new ObjectMapper();

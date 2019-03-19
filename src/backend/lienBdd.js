@@ -33,7 +33,6 @@ exports.register = function(req,res){
 
 
 	console.log(users);
-	var insertion = false;
 
 	try{
 		
@@ -51,7 +50,7 @@ exports.register = function(req,res){
 				console.log(2);
 				res.send({
 	      				"code":201,
-	      				"success":"Le mot de passe et sa confirmation doivent être pareil !"
+	      				"success":"Le mot de passe et sa confirmation doivent être pareils !"
 				});
 
 			}else if(error) {
@@ -133,6 +132,66 @@ exports.login = function(req,res){
 }
 
 
+/*action inscription*/
+exports.panier = function(req,res){
+
+	var obj = JSON.parse(req.body.json);
+
+  	var users={
+    		"res_voy_id":obj.user.identifiant,
+    		"res_cli_id":obj.user.password,
+		"res_etat":obj.user.prenom,
+  	}
+
+
+	console.log(users);
+	var insertion = false;
+
+	try{
+		
+		//Verification si pseudonyme existe
+		connection.query('SELECT * FROM t_client_cli WHERE cli_pseudo = ?',[obj.user.identifiant], function (error, results, fields) {
+
+    			if(results.length >= 1){
+				console.log(1);
+				res.send({
+					"code":202,
+					"success":"Le pseudonyme existe déjà dans la base de données. Veuillez en choisir un nouveau !"
+				});
+
+			}else if(obj.user.password !== obj.user.password_confirm){
+				console.log(2);
+				res.send({
+	      				"code":201,
+	      				"success":"Le mot de passe et sa confirmation doivent être pareils !"
+				});
+
+			}else if(error) {
+				console.log(3);
+				res.send({
+					"code":400,
+					"failed":"Une erreur est survenue lors de la connexion !"
+				});
+
+			}else{
+				console.log(4);
+				connection.query('INSERT INTO t_client_cli SET ?',users, function (error, results, fields) {
+					res.send({
+						"code":200,							
+						"success":"Un nouvel utilisateur est enregistré dans la base de données !"
+					});
+				});
+			}
+			
+  		});
+
+	} catch (err){
+		console.log(err);
+	}
+
+}
+
+
 /*recuperation de la liste de voyage*/
 exports.voyage = function(req,res){
 	try{
@@ -162,19 +221,23 @@ exports.voyage = function(req,res){
 	    			}
 	    			else{
 					var i=0;
-					var monSet = new Set();
+					var lesVoyages = new Set();
 					for(i=0; i<results.length; i++){
 						var user = {
-						    id_cours: results[i].id_cours,
-						    titres: results[i].titres
+						    voy_id: results[i].voy_id,
+						    voy_pho_id: results[i].voy_pho_id,
+						    voy_dateDebut: results[i].voy_dateDebut,
+						    voy_dateFin: results[i].voy_dateFin,
+						    voy_prix: results[i].voy_prix,
+						    voy_type: results[i].voy_type,
+						    voy_nom: results[i].voy_nom
 						}
-						monSet.add(user);
+						lesVoyages.add(user);
 					}
 					//console.log("ligne dans le set", monSet.size);
-					console.log("on a", monSet);
 					res.send({
 						"code":201,
-						"success":monSet,
+						"success":lesVoyages,
 		  			});
 	    			}
 	  		}
@@ -186,6 +249,10 @@ exports.voyage = function(req,res){
 		connection.end();
 	}
 }
+
+
+
+
 
 /*Recuperation de la liste des destinations*/
 exports.destinations = function(req,res){
