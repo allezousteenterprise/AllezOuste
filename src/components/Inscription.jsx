@@ -27,7 +27,7 @@ export default class Inscription extends Component {
     }
 
     _onclickInscription(){
-		this.state.history.push({pathname:"/TestServlet/inscription"});
+		this.state.history.push({pathname:"/TestServlet/connexion"});
     }
 
     handleSubmit(e) {
@@ -46,11 +46,11 @@ export default class Inscription extends Component {
 	axios.post('/TestServlet/inscription', { user })
 	.then(res => {
             var resultat = JSON.parse(res.data);
-		console(resultat);
-            if (resultat.code==="400") {
+            if (resultat.code===400) {
                 alert(resultat.failed);
             }else{
 		 if(resultat.code===200){
+			alert("Inscription réussie. Vous pouvez à présent vous connecter!");
 			this._onclickInscription();
 		}else{
 	    		alert(resultat.success);	

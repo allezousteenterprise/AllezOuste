@@ -19,20 +19,19 @@ import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import bean.Client;
+import bean.Utilisateur;
 
 
 /**
  * Servlet implementation class Lister
  */
 @WebServlet("/inscription")
-public class Connexion extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+public class Inscription extends HttpServlet {
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Connexion() {
+    public Inscription() {
         super();
         // TODO Auto-generated constructor stub
     }
