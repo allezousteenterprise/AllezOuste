@@ -52,15 +52,14 @@ public class ListerVoyages extends HttpServlet {
 		System.out.println("Servlet Lister Voyages");
 
 		String json = request.getReader().readLine();
-		System.out.println("json = "+json);
-		String res = Post.send("http://localhost:9000/api/voyage","json="+json);
+		String res = Post.send("http://localhost:9000/api/voyages","json="+json);
 		
 		ServletOutputStream out = response.getOutputStream();
 		ObjectMapper objectMapper = new ObjectMapper();
 		
 		out.write(objectMapper.writeValueAsBytes(res));
 		out.close();
-		
+		//eazz
 	}
 
 }

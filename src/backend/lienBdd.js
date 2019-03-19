@@ -100,7 +100,7 @@ exports.login = function(req,res){
 				console.log(results);
 	    			if(results.length >0){
 	      				if(results[0].cli_mdp == password){
-						console.log("L\'utilisateur "+identifiant+" est maintnenant connecté !");
+						console.log("L\'utilisateur "+identifiant+" est maintenant connecté !");
 						res.send({
 		  					"code":200,
 		  					"success": obj
@@ -120,11 +120,47 @@ exports.login = function(req,res){
 					console.log("L\'identifiant entrée n\'existe pas dans la base de données. Veuillez vérifier !");
 	      				res.send({
 						"code":202,
-						"success":"L\'identifiant entrée n\'existe pas. Veuillez réessayez !"
+						"success":"L\'identifiant entré n\'existe pas. Veuillez réessayer !"
 		  			});
 	    			}
 	  		}
 	  	}); 
+
+	} catch (err){
+		console.log(err);
+	}
+}
+
+
+/*recuperation de la liste de voyage*/
+exports.voyages = function(req,res){
+	try{
+
+	  	connection.query('SELECT * FROM t_voyage_voy', function (error, results, fields) {
+	  		if(error){
+	    			console.log("Une erreur est survenue lors de la connexion",error);
+	    			res.send({
+	      				"code":201,
+	      				"failed":"Une erreur est survenue lors de la connexion !"
+	    			})
+	  		}else{
+	    			if(results.length == 0){
+					console.log("Aucune ligne trouvé dans la table voyage !");
+					res.send({
+	  					"code":203,
+	  					"success":"Pas de voyage disponible !"
+	    				});
+	    			}
+	    			else{
+					console.log(results);
+					res.send({
+						"code":200,
+						"success":results,
+		  			});
+					//res.json(results);
+	    			}
+	  		}
+	  	});
 
 	} catch (err){
 		console.log(err);
@@ -192,115 +228,3 @@ exports.panier = function(req,res){
 }
 
 
-/*recuperation de la liste de voyage*/
-exports.voyage = function(req,res){
-	try{
-		connection.connect(function(err){
-			if(!err) {
-				console.log("Connexion à la base de données effectuée !");
-			}else{
-				console.log("Erreur de connexion à la base de données !");
-			}
-		
-		});
-
-	  	connection.query('SELECT * FROM t_voyage_voy', function (error, results, fields) {
-	  		if(error){
-	    			console.log("Une erreur est survenue lors de la connexion",error);
-	    			res.send({
-	      				"code":400,
-	      				"failed":"Une erreur est survenue lors de la connexion !"
-	    			})
-	  		}else{
-	    			if(results.length == 0){
-					console.log("Aucune ligne trouvé dans la table cours !");
-					res.send({
-	  					"code":200,
-	  					"success":"Pas de voyage disponible !"
-	    				});
-	    			}
-	    			else{
-					var i=0;
-					var lesVoyages = new Set();
-					for(i=0; i<results.length; i++){
-						var user = {
-						    voy_id: results[i].voy_id,
-						    voy_pho_id: results[i].voy_pho_id,
-						    voy_dateDebut: results[i].voy_dateDebut,
-						    voy_dateFin: results[i].voy_dateFin,
-						    voy_prix: results[i].voy_prix,
-						    voy_type: results[i].voy_type,
-						    voy_nom: results[i].voy_nom
-						}
-						lesVoyages.add(user);
-					}
-					//console.log("ligne dans le set", monSet.size);
-					res.send({
-						"code":201,
-						"success":lesVoyages,
-		  			});
-	    			}
-	  		}
-	  	});
-
-	} catch (err){
-		console.log(err);
-	}finally{
-		connection.end();
-	}
-}
-
-
-
-
-
-/*Recuperation de la liste des destinations*/
-exports.destinations = function(req,res){
-	try{
-		connection.connect(function(err){
-			if(!err) {
-				console.log("Connexion à la base de données effectuée !");
-			}else{
-				console.log("Erreur de connexion à la base de données !");
-			}
-		
-		});
-
-
-  		connection.query('SELECT voy_nom FROM t_voyage_voy', function (error, results, fields) {
-  		if(error){
-    			console.log("Une erreur est survenue lors de la connexion",error);
-    			res.send({
-      				"code":400,
-      				"failed":"Une erreur est survenue lors de la connexion !"
-    			})
-  		}else{
-    			if(results.length == 0){
-				console.log("Aucune ligne trouvé dans la table cours !");
-				res.send({
-  					"code":200,
-  					"success":"Pas de voyages disponibles !"
-    				});
-    			}
-    			else{
-				var i=0;
-				var monSet = new Set();
-				for(i=0; i<results.length; i++){
-					monSet.add(results[i].voy_nom);
-				}
-
-				console.log("DestinationsDisponibles", monSet);
-				res.send({
-					"code":201,
-					"success":results,
-	  			});
-    			}
-  		}
-  	});
-
-	} catch (err){
-		console.log(err);
-	}finally{
-		connection.end();
-	}
-}
