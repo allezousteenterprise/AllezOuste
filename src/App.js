@@ -12,6 +12,7 @@ import Connexion from './components/Connexion';
 import Inscription from './components/Inscription';
 import Profil from './components/Profil';
 import VoyagesConnecter from './components/VoyagesConnecter';
+import Panier from './components/Panier';
 import 'w3-css/w3.css';
 
 class App extends Component {
@@ -25,6 +26,7 @@ class App extends Component {
 				<Route path="/TestServlet/inscription" component={ Inscription } />
 				<Route path="/TestServlet/profil" component={Profil} />
 				<Route path="/TestServlet/voyagesconnecter" component={VoyagesConnecter} />
+				<Route path="/TestServlet/panier" component={Panier} />
 				<Route component={ Home } />
 			</Switch>
 		</Router>
